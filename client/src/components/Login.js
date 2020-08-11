@@ -3,6 +3,7 @@ import { Redirect, Link } from "react-router-dom"
 import { connect } from "react-redux";
 import { logIn } from "../store/actions/authActions";
 import Header from "./Header";
+import Loading from "./Loading";
 
 const Login = props => {
   const [credentials, setCredentials] = useState({
@@ -24,7 +25,7 @@ const Login = props => {
 
   return (
     <>
-      <Header />
+      <Header /> 
       {localStorage.getItem("token") ? (<Redirect to="/profile" />) : (<Link to="/login" />)}
       {!props.isSuccess ? 
         (<div className="signIn">
@@ -52,8 +53,7 @@ const Login = props => {
                 required
               />
             </div>
-  
-            <button>Sign In</button>
+            {props.isLoading ? (<Loading />) : (<button>Sign In</button>)}
           </form>
           
         </div>) : (<Redirect to="/profile" />)
@@ -64,6 +64,7 @@ const Login = props => {
 
 const mapStateToProps = state => {
   return {
+    isLoading: state.authReducer.isLoading,
     isSuccess: state.authReducer.isSuccess,
     isFailure: state.authReducer.error
   };
