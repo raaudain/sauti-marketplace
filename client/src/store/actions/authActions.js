@@ -7,7 +7,6 @@ export const logIn = credentials => dispatch => {
     .post("/auth/login", credentials)
     .then(res => {
       // Sets token
-      console.log(res.data)
       localStorage.setItem("userId", res.data.id);
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", res.data.user);
